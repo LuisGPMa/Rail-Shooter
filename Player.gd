@@ -1,13 +1,16 @@
 extends KinematicBody2D
 
-export (int) var speed = 200
+export (int) var speed = 300
 export (float) var rotation_speed = 1.5
+export (int) var jump_speed = 1000
+export (int) var gravity = 2500
 
 var velocity := Vector2.ZERO
 var rotation_dir := 0
 
 # Onready inicializa como se estivesse no callback _ready
 onready var target = position
+onready var sprite := $Sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +24,17 @@ func get_8way_input():
 	velocity = Vector2.ZERO
 	velocity.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	velocity.y = Input.get_action_strength("down") - Input.get_action_strength("up")	
+	if velocity.x > 0:
+		sprite.play("right")
+	elif velocity.x < 0:
+		sprite.play("left")
+	elif velocity.y > 0:
+		sprite.play("down")
+	elif velocity.y < 0:
+		sprite.play("up")
+	else:
+		sprite.stop()
+		sprite.frame = 0
 	velocity = velocity.normalized() * speed
 	#print(velocity)
 
@@ -43,19 +57,43 @@ func get_mouse_input():
 		velocity = Vector2(-speed, 0).rotated(rotation)
 	if Input.is_action_pressed("up"):
 		velocity = Vector2(speed, 0).rotated(rotation)
+
+func get_point_and_click():
+	velocity = position.direction_to(target) * speed
+	if position.distance_to(target) <= 5:
+		velocity = Vector2.ZERO
 		
+func get_side_input():
+	velocity.x = 0
+	var right = Input.is_action_pressed('right')
+	var left = Input.is_action_pressed('left')
+
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
+		velocity.y = -jump_speed
+	if right:
+		velocity.x += speed
+	if left:
+		velocity.x -= speed
+	print(velocity)
+	
+	
 func _physics_process(delta):
+	# 1. Movimento em 8 direções
 	#get_8way_input()
 	
-	# Rotation keyboard
+	# 2. Rotação e movimento com teclado	
 	#get_rotation_input()
 	#rotation += rotation_dir * rotation_speed * delta	
 	
-	# Rotate mouse
+	# 3. Rotação com mouse + movimento com teclado
 	#get_mouse_input()	
 	
-	# Point and click
-	velocity = position.direction_to(target) * speed	
+	# 4. Point and click
+	#get_point_and_click()
+	
 	# look_at(target)
-	if position.distance_to(target) > 5:
-		velocity = move_and_slide(velocity)
+	
+	# 5. Movimento lateral com salto + gravidade
+	velocity.y += gravity * delta
+	get_side_input()
+	velocity = move_and_slide(velocity, Vector2.UP)
