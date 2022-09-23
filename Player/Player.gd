@@ -5,12 +5,17 @@ export (float) var rotation_speed = 1.5
 export (int) var jump_speed = 1000
 export (int) var gravity = 2500
 
+export (PackedScene) var box : PackedScene
+
 var velocity := Vector2.ZERO
 var rotation_dir := 0
 
 # Onready inicializa como se estivesse no callback _ready
 onready var target = position
 onready var sprite := $Sprite
+
+#onready var box := preload("res://Items/Box.tscn")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -70,11 +75,25 @@ func get_side_input():
 
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -jump_speed
+		# Aumenta em 1 o score ao saltar
+		get_tree().call_group("HUD", "updateScore")
+		# Cria uma caixa ao saltar
+		var b := box.instance()
+		owner.add_child(b)
+		b.position = global_position
+		
 	if right:
 		velocity.x += speed
 	if left:
 		velocity.x -= speed
-	print(velocity)
+	if velocity.x > 0:
+		sprite.play("right")
+	elif velocity.x < 0:
+		sprite.play("left")
+	else:
+		sprite.stop()
+		sprite.frame = 0
+	#print(velocity)
 	
 	
 func _physics_process(delta):
