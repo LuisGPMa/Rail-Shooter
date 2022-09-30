@@ -13,6 +13,7 @@ var rotation_dir := 0
 # Onready inicializa como se estivesse no callback _ready
 onready var target = position
 onready var sprite := $Sprite
+onready var audioPlayer := $AudioPlayer
 
 #onready var box := preload("res://Items/Box.tscn")
 
@@ -81,6 +82,8 @@ func get_side_input():
 		var b := box.instance()
 		owner.add_child(b)
 		b.position = global_position
+		# Toca o som de pulo
+		audioPlayer.play()
 		
 	if right:
 		velocity.x += speed

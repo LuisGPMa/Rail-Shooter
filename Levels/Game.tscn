@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://Xolonium-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Levels/Level1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Game.gd" type="Script" id=4]
+[ext_resource path="res://SFX/Summer_Park.ogg" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -24,3 +25,11 @@ margin_right = 144.0
 margin_bottom = 53.0
 custom_fonts/font = SubResource( 1 )
 text = "Score: 0"
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 1051, 305 )
+stream = ExtResource( 5 )
+autoplay = true
+max_distance = 1500.0
+attenuation = 2.54912
+bus = "Music"
