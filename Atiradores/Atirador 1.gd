@@ -23,6 +23,9 @@ func _ready() -> void:
 func _input(event):
 	if event.is_action_pressed("click"):
 		target = get_global_mouse_position()
+		
+func shoot():
+	pass
 
 func get_8way_input():
 	velocity = Vector2.ZERO

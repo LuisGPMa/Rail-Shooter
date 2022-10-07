@@ -2,7 +2,7 @@
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 69, -95, 0, 0, 0, 0, 206, -106, 0, 0, 0, 0, 335, -8, 0, 0, 0, 0, 343, 101, 0, 0, 0, 0, 243, 202, 0, 0, 0, 0, 22, 192, 0, 0, 0, 0, -141, 70, 0, 0, 0, 0, -259, -164, 0, 0, 0, 0, -208, -224 )
+"points": PoolVector2Array(  )
 }
 
 [node name="StaticBody2D" type="StaticBody2D"]
