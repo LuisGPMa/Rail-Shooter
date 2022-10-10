@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Atiradores/Atirador 2.tscn" type="PackedScene" id=1]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 19, -23, 7.76835, -5.94614, -7.76835, 5.94614, 8, -23, 0, 0, 0, 0, 7, -16, -1.15087, -5.2748, 1.15087, 5.2748, 21, -12, 1.15087, -8.43968, -1.15087, 8.43968, 8, -3, -0.575433, -10.8373, 0.575433, 10.8373, 21, 2, 15.1531, 10.0701, -15.1531, -10.0701, 9, 6, -5.37071, -12.3718, 5.37071, 12.3718, 19, -5, -4.21984, 10.7414, 4.21984, -10.7414, 8, -11, -2.58945, 3.74031, 2.58945, -3.74031, 19, -19, 0, 0, 0, 0, 19, -23, 0, 0, 0, 0, 19, -23, 0, 0, 0, 0, 19, -23, 0, 0, 0, 0, 19, -23, 0, 0, 0, 0, 19, -23 )
+}
+
+[node name="Path2D" type="Path2D"]
+position = Vector2( -0.241379, -0.206896 )
+scale = Vector2( 1.03448, 1.03448 )
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( 19, -23 )
+rotation = -2.53035
+
+[node name="Atirador 2" parent="PathFollow2D" instance=ExtResource( 1 )]
+position = Vector2( -0.464058, 0.325207 )
+rotation = 2.53035
